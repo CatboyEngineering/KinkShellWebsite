@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AccountCreateRequest } from 'src/app/models/API/Request/account-create-request.interface';
-import { AccountLoginRequest } from 'src/app/models/API/Request/account-login-request.interface';
-import { AccountType } from 'src/app/models/enum/account-type.enum';
 import { AuthStateActions } from './auth-state.actions';
-import { AuthStateSelectors } from './auth-state.selectors';
+import { AccountCreateRequest } from '../../models/API/request/account-create-request.interface';
+import { AccountLoginRequest } from '../../models/API/request/account-login-request.interface';
+import { selectAuthToken, selectDisplayName, selectUserID } from './auth-state.selectors';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthStateService {
-  authToken$: Observable<string> = this.store.select(AuthStateSelectors.authToken);
-  userID$: Observable<string> = this.store.select(AuthStateSelectors.userID);
-  avatarURL$: Observable<string> = this.store.select(AuthStateSelectors.avatarURL);
-  displayName$: Observable<string> = this.store.select(AuthStateSelectors.displayName);
-  accountType$: Observable<AccountType> = this.store.select(AuthStateSelectors.accountType);
+  authToken$: Observable<string> = this.store.select(selectAuthToken)
+  userID$: Observable<string> = this.store.select(selectUserID);
+  displayName$: Observable<string> = this.store.select(selectDisplayName);
 
   constructor(private store: Store) {}
 

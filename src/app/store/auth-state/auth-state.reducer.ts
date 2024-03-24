@@ -3,7 +3,7 @@ import { authInitialState } from './auth-initial-state';
 import { AuthStateActions } from './auth-state.actions';
 import { AuthState } from './auth-state.interface';
 
-const reducer = createReducer(
+export const authStateReducer = createReducer(
   authInitialState,
   on(
     AuthStateActions.registerSuccess,
@@ -26,7 +26,3 @@ const reducer = createReducer(
   on(AuthStateActions.logOutSuccess, (state, action): AuthState => authInitialState),
   on(AuthStateActions.authDataCleared, (state, action): AuthState => authInitialState)
 );
-
-export function authStateReducer(state: AuthState, action: Action) {
-  return reducer(state, action);
-}

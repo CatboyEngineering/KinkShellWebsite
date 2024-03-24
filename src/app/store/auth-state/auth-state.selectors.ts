@@ -1,7 +1,8 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { AppState } from '../app-state.interface';
+import { AuthState } from './auth-state.interface';
 
-export abstract class AuthStateSelectors {
-  static readonly authToken = (state: AppState) => state.authState.authToken;
-  static readonly userID = (state: AppState) => state.authState.accountID;
-  static readonly displayName = (state: AppState) => state.authState.displayName;
-}
+export const selectAuthState = createFeatureSelector<AuthState>("authState");
+export const selectAuthToken = createSelector(selectAuthState, (state: AuthState) => state.authToken);
+export const selectUserID = createSelector(selectAuthState, (state: AuthState) => state.accountID);
+export const selectDisplayName = createSelector(selectAuthState, (state: AuthState) => state.displayName);

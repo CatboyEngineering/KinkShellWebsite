@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment.dev';
 export class HTTPService {
   constructor(private http: HttpClient, private authStateService: AuthStateService, private router: Router) {}
 
-  GET<T>(url: string, action: string, isProtected: boolean = true): Observable<HttpResponse<T>> {
+  GET<T>(url: string): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
       switchMap(([authToken]) => {
@@ -21,7 +21,7 @@ export class HTTPService {
     );
   }
 
-  POST<T>(url: string, body: any, action: string, isProtected: boolean = true): Observable<HttpResponse<T>> {
+  POST<T>(url: string, body: any): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
       switchMap(([authToken]) => {
@@ -31,7 +31,7 @@ export class HTTPService {
     );
   }
 
-  PUT<T>(url: string, body: any, action: string, isProtected: boolean = true): Observable<HttpResponse<T>> {
+  PUT<T>(url: string, body: any): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
       switchMap(([authToken]) => {
@@ -41,21 +41,21 @@ export class HTTPService {
     );
   }
 
-  PATCH<T>(url: string, body: any, action: string, isProtected: boolean = true): Observable<HttpResponse<T>> {
+  PATCH<T>(url: string, body: any): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
       switchMap(([authToken]) => {
-        let call = this.http.request<T>('PATCH', environment.api_base + url, { ...this.httpCallOptions(authToken), body: body });
+        let call = this.http.patch<T>(environment.api_base + url, body, this.httpCallOptions(authToken));
         return this.mapResponse<T>(call);
       })
     );
   }
 
-  DELETE<T>(url: string, body: any, action: string, isProtected: boolean = true): Observable<HttpResponse<T>> {
+  DELETE<T>(url: string): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
       switchMap(([authToken]) => {
-        let call = this.http.request<T>('DELETE', environment.api_base + url, { ...this.httpCallOptions(authToken), body: body });
+        let call = this.http.delete<T>(environment.api_base + url, this.httpCallOptions(authToken));
         return this.mapResponse<T>(call);
       })
     );
