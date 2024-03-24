@@ -9,9 +9,16 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AuthStateEffects } from './store/auth-state/auth-state.effects';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { AppDetailsStateEffects } from './store/app-details-state/app-detauls-state.effects';
 
 export const metaReducers: MetaReducer[] = [localstorageMetaReducer];
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideStore(rootReducer, { metaReducers: metaReducers }), provideEffects([AuthStateEffects]), provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), provideHttpClient(withFetch())]
+  providers: [
+    provideRouter(routes),
+    provideStore(rootReducer, { metaReducers: metaReducers }),
+    provideEffects([AuthStateEffects, AppDetailsStateEffects]),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    provideHttpClient(withFetch())
+  ]
 };
