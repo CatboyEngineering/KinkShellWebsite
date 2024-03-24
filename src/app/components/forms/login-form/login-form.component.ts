@@ -2,23 +2,36 @@ import { Component } from '@angular/core';
 import { HTTPService } from '../../../services/http-service/http.service';
 import { AuthStateService } from '../../../store/auth-state/auth-state.service';
 import { AccountLoginRequest } from '../../../models/API/request/account-login-request.interface';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LoginForm } from '../../../models/form/login-form.interface';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
 export class LoginFormComponent {
-  constructor(private authStateService: AuthStateService) {}
+  loginForm: FormGroup<LoginForm>;
 
-  public submit(): void {
-    let loginRequest: AccountLoginRequest = {
-      username: 'yourmom',
-      password: "Loltest123"
+  constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService){
+    this.loginForm = this.formBuilder.group<LoginForm>({
+      username: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required }),
+      password: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required })
+    })
+  }
+
+  submit() {
+    if(this.loginForm.valid) {
+      let request: AccountLoginRequest = {
+        username: this.loginForm.controls.username.value,
+        password: this.loginForm.controls.password.value
+      }
+  
+      this.authStateService.onLoginRequest(request);
+    }else{
+      window.alert("Please fill in each field before submitting.")
     }
-
-    this.authStateService.onLoginRequest(loginRequest);
   }
 }

@@ -35,7 +35,7 @@ export class AuthStateEffects {
       this.actions$.pipe(
         ofType(AuthStateActions.registerSuccess),
         tap(() => {
-          this.router.navigate(['/app/dashboard']);
+          this.router.navigate(['/user']);
         })
       ),
     { dispatch: false }
@@ -63,7 +63,7 @@ export class AuthStateEffects {
       this.actions$.pipe(
         ofType(AuthStateActions.loginSuccess),
         tap(() => {
-          this.router.navigate(['/app/dashboard']);
+          this.router.navigate(['/user']);
         })
       ),
     { dispatch: false }
@@ -90,7 +90,7 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.logOutSuccess),
       tap(() => {
-        this.router.navigate(['/logged-out']);
+        this.router.navigate(['/']);
       })
     )
   );
