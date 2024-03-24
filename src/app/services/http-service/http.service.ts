@@ -14,7 +14,7 @@ export class HTTPService {
   GET<T>(url: string): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap(([authToken]) => {
+      switchMap((authToken) => {
         let call = this.http.get<T>(environment.api_base + url, this.httpCallOptions(authToken));
         return this.mapResponse<T>(call);
       })
@@ -24,7 +24,7 @@ export class HTTPService {
   POST<T>(url: string, body: any): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap(([authToken]) => {
+      switchMap((authToken) => {
         let call = this.http.post<T>(environment.api_base + url, body, this.httpCallOptions(authToken));
         return this.mapResponse<T>(call);
       })
@@ -34,7 +34,7 @@ export class HTTPService {
   PUT<T>(url: string, body: any): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap(([authToken]) => {
+      switchMap((authToken) => {
         let call = this.http.put<T>(environment.api_base + url, body, this.httpCallOptions(authToken));
         return this.mapResponse<T>(call);
       })
@@ -44,7 +44,7 @@ export class HTTPService {
   PATCH<T>(url: string, body: any): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap(([authToken]) => {
+      switchMap((authToken) => {
         let call = this.http.patch<T>(environment.api_base + url, body, this.httpCallOptions(authToken));
         return this.mapResponse<T>(call);
       })
@@ -54,7 +54,7 @@ export class HTTPService {
   DELETE<T>(url: string): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap(([authToken]) => {
+      switchMap((authToken) => {
         let call = this.http.delete<T>(environment.api_base + url, this.httpCallOptions(authToken));
         return this.mapResponse<T>(call);
       })

@@ -18,4 +18,8 @@ export class UserComponent {
     this.userID$ = this.authStateService.userID$;
     this.displayName$ = this.authStateService.displayName$;
   }
+
+  logOut(): void {
+    this.authStateService.onLogOut();
+  }
 }

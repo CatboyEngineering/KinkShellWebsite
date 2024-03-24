@@ -5,16 +5,19 @@ import { AuthStateService } from '../../../store/auth-state/auth-state.service';
 import { AccountCreateRequest } from '../../../models/API/request/account-create-request.interface';
 import { AppDetailsStateService } from '../../../store/app-details-state/app-details-state.service';
 import { UiFormFieldErrorComponent } from '../../ui/ui-form-field-error/ui-form-field-error.component';
+import { FormName } from '../../../models/enum/form-name.enum';
+import { UiFormErrorComponent } from '../../ui/ui-form-error/ui-form-error.component';
 
 @Component({
   selector: 'app-register-form',
   standalone: true,
-  imports: [ReactiveFormsModule, UiFormFieldErrorComponent],
+  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css'
 })
 export class RegisterFormComponent {
   registerForm: FormGroup<RegisterForm>;
+  FormName = FormName;
 
   constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService, private appDetailsStateService: AppDetailsStateService) {
     this.registerForm = this.formBuilder.group<RegisterForm>({

@@ -1,23 +1,25 @@
 <form [formGroup]="registerForm" #form="ngForm" (ngSubmit)="submit()" class="my-5 py-4 border border-gray-300 rounded-md">
+  <ui-form-error [formName]="FormName.REGISTER_ACCOUNT"></ui-form-error>
+
   <div class="my-2">
     <ui-form-field-error [form]="form" [errorFor]="'username'"></ui-form-field-error>
     <p class="text-sm">Choose a username to log in with</p>
-    <input type="text" placeholder="Username" formControlName="username" class="px-3 py-1 rounded-md shadow-md" />
+    <input type="text" placeholder="Username" formControlName="username" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
   </div>
   <div class="my-2">
     <ui-form-field-error [form]="form" [errorFor]="'password'"></ui-form-field-error>
     <p class="text-sm">Create a password to log in with</p>
-    <input type="password" placeholder="Password" formControlName="password" class="px-3 py-1 rounded-md shadow-md" />
+    <input type="password" placeholder="Password" formControlName="password" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
   </div>
   <div class="my-2">
     <ui-form-field-error [form]="form" [errorFor]="'displayName'"></ui-form-field-error>
     <p class="text-sm">Choose a display name to show to other users</p>
-    <input type="text" placeholder="Display Name" formControlName="displayName" class="px-3 py-1 rounded-md shadow-md" />
+    <input type="text" placeholder="Display Name" formControlName="displayName" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
   </div>
   <div class="my-2">
     <ui-form-field-error [form]="form" [errorFor]="'betaPassword'"></ui-form-field-error>
     <p class="text-sm">This is a closed beta. Please enter the beta password</p>
-    <input type="text" placeholder="Beta Password" formControlName="betaPassword" class="px-3 py-1 rounded-md shadow-md" />
+    <input type="text" placeholder="Beta Password" formControlName="betaPassword" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
   </div>
 
   <button class="bg-violet-950 text-white font-bold rounded-md px-3 py-2 mx-1 hover:bg-violet-900" type="submit">Register!</button>

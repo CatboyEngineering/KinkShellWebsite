@@ -21,11 +21,10 @@ export class AuthStateEffects {
       mergeMap(action =>
         this.httpService.PUT<AccountAuthenticatedResponse>('account', action.request).pipe(
           map(response => {
-            if (response.ok) {
-              return AuthStateActions.registerSuccess({ response: response.body! });
-            } else {
-              return AuthStateActions.authFailure({ form: FormName.REGISTER_ACCOUNT, error: response });
-            }
+            return AuthStateActions.registerSuccess({ response: response.body! });
+          }),
+          catchError(error => {
+            return of(AuthStateActions.authFailure({ form: FormName.REGISTER_ACCOUNT, error: error }));
           })
         )
       )
@@ -114,13 +113,13 @@ export class AuthStateEffects {
       case 401: {
         return {
           form,
-          error: 'Your email or password was incorrect.'
+          error: 'Your username or password was incorrect.'
         };
       }
       case 409: {
         return {
           form,
-          error: 'An account with that email address already exists.'
+          error: 'An account with that username already exists.'
         };
       }
       default:
