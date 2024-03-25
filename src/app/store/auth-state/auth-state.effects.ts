@@ -87,13 +87,15 @@ export class AuthStateEffects {
     )
   );
 
-  logOutSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthStateActions.logOutSuccess),
-      tap(() => {
-        this.router.navigate(['/']);
-      })
-    )
+  logOutSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthStateActions.logOutSuccess),
+        tap(() => {
+          this.router.navigate(['/']);
+        })
+      ),
+    { dispatch: false }
   );
 
   authFailure$ = createEffect(() =>
