@@ -23,13 +23,13 @@ export class RegisterFormComponent {
     this.registerForm = this.formBuilder.group<RegisterForm>({
       username: this.formBuilder.nonNullable.control('', {
         updateOn: 'submit',
-        validators: Validators.compose([Validators.required, Validators.minLength(6)])
+        validators: Validators.compose([Validators.required, Validators.pattern("^[a-z0-9]{6,}$")])
       }),
       password: this.formBuilder.nonNullable.control('', {
         updateOn: 'submit',
-        validators: Validators.compose([Validators.required, Validators.minLength(8)])
+        validators: Validators.compose([Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")])
       }),
-      displayName: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required }),
+      displayName: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-\'_]{8,24}$/)])}),
       betaPassword: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required })
     });
   }

@@ -48,11 +48,10 @@ export class AuthStateEffects {
       mergeMap(action =>
         this.httpService.POST<AccountAuthenticatedResponse>('account', action.request).pipe(
           map(response => {
-            if (response.ok) {
               return AuthStateActions.loginSuccess({ response: response.body! });
-            } else {
-              return AuthStateActions.authFailure({ form: FormName.LOG_IN, error: response });
-            }
+          }),
+          catchError(error => {
+            return of(AuthStateActions.authFailure({ form: FormName.LOG_IN, error: error }));
           })
         )
       )
@@ -76,11 +75,10 @@ export class AuthStateEffects {
       mergeMap(() =>
         this.httpService.POST<any>('logout', {}).pipe(
           map(response => {
-            if (response.ok) {
               return AuthStateActions.logOutSuccess();
-            } else {
-              return AuthStateActions.logOutSuccess();
-            }
+          }),
+          catchError(error => {
+            return of(AuthStateActions.logOutSuccess());
           })
         )
       )

@@ -44,6 +44,10 @@ export class UiFormFieldErrorComponent implements OnInit {
       errors.push('Passwords do not match');
     }
 
+    if (this.control?.hasError('pattern')) {
+      errors.push('This field does not follow the pattern.');
+    }
+
     if (this.control?.hasError('minlength')) {
       if (this.errorFor === 'username') {
         errors.push('Username must be at least 6 characters long');

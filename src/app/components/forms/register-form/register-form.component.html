@@ -1,25 +1,37 @@
 <form [formGroup]="registerForm" #form="ngForm" (ngSubmit)="submit()" class="my-5 py-4 border border-gray-300 rounded-md">
   <ui-form-error [formName]="FormName.REGISTER_ACCOUNT"></ui-form-error>
 
-  <div class="my-2">
+  <div class="my-4">
     <ui-form-field-error [form]="form" [errorFor]="'username'"></ui-form-field-error>
-    <p class="text-sm">Choose a username to log in with</p>
-    <input type="text" placeholder="Username" formControlName="username" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
+    <div>
+      <p class="inline-block font-bold mx-1">Choose Username:</p>
+      <input type="text" placeholder="Username" formControlName="username" class="inline-block px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
+    </div>
+    <p class="inline-block text-sm mx-1">Usernames must be at least 6 characters and can only contain letters and numbers.</p>
   </div>
-  <div class="my-2">
+  <div class="my-4">
     <ui-form-field-error [form]="form" [errorFor]="'password'"></ui-form-field-error>
-    <p class="text-sm">Create a password to log in with</p>
-    <input type="password" placeholder="Password" formControlName="password" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
+    <div>
+      <p class="inline-block font-bold mx-1">Create Password:</p>
+      <input type="password" placeholder="Password" formControlName="password" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
+    </div>
+    <p class="inline-block text-sm mx-1">Passwords must be at least 8 characters and include 1 uppercase letter, 1 lowercase letter, and 1 number.</p>
   </div>
-  <div class="my-2">
+  <div class="my-4">
     <ui-form-field-error [form]="form" [errorFor]="'displayName'"></ui-form-field-error>
-    <p class="text-sm">Choose a display name to show to other users</p>
-    <input type="text" placeholder="Display Name" formControlName="displayName" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
+    <div>
+      <p class="inline-block font-bold mx-1">Display Name:</p>
+      <input type="text" placeholder="Display Name" formControlName="displayName" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
+    </div>
+    <p class="inline-block text-sm mx-1">This will be shown to other users. 8-24 characters long, letters and spaces only.</p>
   </div>
-  <div class="my-2">
+  <div class="my-4">
     <ui-form-field-error [form]="form" [errorFor]="'betaPassword'"></ui-form-field-error>
-    <p class="text-sm">This is a closed beta. Please enter the beta password</p>
-    <input type="text" placeholder="Beta Password" formControlName="betaPassword" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
+    <div>
+      <p class="inline-block font-bold mx-1">Beta Password:</p>
+      <input type="text" placeholder="Beta Password" formControlName="betaPassword" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
+    </div>
+    <p class="inline-block text-sm mx-1">This is a closed beta. Please provide the beta password.</p>
   </div>
 
   <button class="bg-violet-950 text-white font-bold rounded-md px-3 py-2 mx-1 hover:bg-violet-900" type="submit">Register!</button>
