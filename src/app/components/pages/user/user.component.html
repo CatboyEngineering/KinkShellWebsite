@@ -21,6 +21,7 @@
 
         <app-name-change-form></app-name-change-form>
 
-        <button class="bg-violet-950 text-white font-bold rounded-md px-3 py-2 hover:bg-violet-900" (click)="logOut()">Log Out</button>
+        <button class="bg-violet-950 text-white font-bold rounded-md px-3 py-2 mx-1 hover:bg-violet-900" (click)="logOut()">Log Out</button>
+        <button class="bg-red-900 text-white font-bold rounded-md px-3 py-2 mx-1 hover:bg-violet-900" (click)="deleteAccount()">{{isDeleting ? "Confirm Delete?" : "Delete Account"}}</button>
     </div>
 </div>

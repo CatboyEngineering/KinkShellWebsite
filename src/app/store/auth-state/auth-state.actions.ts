@@ -17,5 +17,7 @@ export abstract class AuthStateActions {
   static readonly nameChangeSuccess = createAction('@kinkshell/action/namechange/success', props<{ response: NameChangeResponse }>());
   static readonly logOutAttempt = createAction('@kinkshell/action/logout/attempt');
   static readonly logOutSuccess = createAction('@kinkshell/action/logout/success');
+  static readonly deleteAttempt = createAction('@kinkshell/action/delete/attempt');
+  static readonly deleteSuccess = createAction('@kinkshell/action/delete/success');
   static readonly authDataCleared = createAction('@kinkshell/action/authentication/cleared');
 }

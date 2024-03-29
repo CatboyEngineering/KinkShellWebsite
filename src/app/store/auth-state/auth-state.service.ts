@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { AuthStateActions } from './auth-state.actions';
 import { AccountCreateRequest } from '../../models/API/request/account-create-request.interface';
 import { AccountLoginRequest } from '../../models/API/request/account-login-request.interface';
@@ -27,6 +27,10 @@ export class AuthStateService {
 
   onNameChangeRequest(request: NameChangeRequest): void {
     this.store.dispatch(AuthStateActions.nameChangeAttempt({ request }));
+  }
+
+  onDeleteAccountRequest(): void {
+    this.store.dispatch(AuthStateActions.deleteAttempt());
   }
 
   onLogOut(): void {

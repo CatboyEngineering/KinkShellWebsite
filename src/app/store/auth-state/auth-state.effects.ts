@@ -113,6 +113,28 @@ export class AuthStateEffects {
     { dispatch: false }
   );
 
+  deleteAccountAttempt$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(AuthStateActions.deleteAttempt),
+    mergeMap(() =>
+      this.httpService.DELETE<any>('account').pipe(
+        map(response => {
+            return AuthStateActions.deleteSuccess();
+        })
+      )
+    )
+  )
+);
+
+deleteAccountSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.deleteSuccess),
+      map(() => {
+        return AuthStateActions.logOutSuccess()
+      })
+    )
+);
+
   authExpired$ = createEffect(
     () =>
       this.actions$.pipe(
