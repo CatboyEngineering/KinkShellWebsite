@@ -5,6 +5,7 @@ import { AuthStateActions } from './auth-state.actions';
 import { AccountCreateRequest } from '../../models/API/request/account-create-request.interface';
 import { AccountLoginRequest } from '../../models/API/request/account-login-request.interface';
 import { selectAuthToken, selectDisplayName, selectUserID } from './auth-state.selectors';
+import { NameChangeRequest } from '../../models/API/request/name-change-request.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,10 @@ export class AuthStateService {
 
   onLoginRequest(request: AccountLoginRequest): void {
     this.store.dispatch(AuthStateActions.loginAttempt({ request }));
+  }
+
+  onNameChangeRequest(request: NameChangeRequest): void {
+    this.store.dispatch(AuthStateActions.nameChangeAttempt({ request }));
   }
 
   onLogOut(): void {

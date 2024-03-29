@@ -29,7 +29,7 @@ export class RegisterFormComponent {
         updateOn: 'submit',
         validators: Validators.compose([Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")])
       }),
-      displayName: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-\'_]{8,24}$/)])}),
+      displayName: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-\'_]{8,32}$/)])}),
       betaPassword: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required })
     });
   }

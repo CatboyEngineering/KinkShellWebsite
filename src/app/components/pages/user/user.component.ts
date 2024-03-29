@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AuthStateService } from '../../../store/auth-state/auth-state.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { NameChangeFormComponent } from '../../forms/name-change-form/name-change-form.component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, NameChangeFormComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })

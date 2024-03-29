@@ -10,6 +10,7 @@ import { AccountAuthenticatedResponse } from '../../models/API/response/account-
 import { FormName } from '../../models/enum/form-name.enum';
 import { FormValidationError } from '../../models/form-validation-error.interface';
 import { AppDetailsStateActions } from '../app-details-state/app-details-state.actions';
+import { NameChangeResponse } from '../../models/API/response/name-change-response.interface';
 
 @Injectable()
 export class AuthStateEffects {
@@ -69,6 +70,22 @@ export class AuthStateEffects {
     { dispatch: false }
   );
 
+  nameChangeAttempt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.nameChangeAttempt),
+      mergeMap(action =>
+        this.httpService.PATCH<NameChangeResponse>('account', action.request).pipe(
+          map(response => {
+              return AuthStateActions.nameChangeSuccess({ response: response.body! });
+          }),
+          catchError(error => {
+            return of(AuthStateActions.authFailure({ form: FormName.CHANGE_NAME, error: error }));
+          })
+        )
+      )
+    )
+  );
+
   logOutAttempt$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.logOutAttempt),
@@ -89,6 +106,17 @@ export class AuthStateEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthStateActions.logOutSuccess),
+        tap(() => {
+          this.router.navigate(['/']);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  authExpired$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthStateActions.authExpired),
         tap(() => {
           this.router.navigate(['/']);
         })

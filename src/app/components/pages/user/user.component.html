@@ -14,6 +14,13 @@
             <p>Make sure to write down your ID above. It's safe to share with other KinkShell users, and in fact, they'll need to know it in order to add you to their KinkShells. If you ever lose it, come back here to see it again.</p>
         </div>
 
-        <button class="bg-violet-950 text-white font-bold rounded-md px-3 py-2 hover:bg-violet-900" type="submit" (click)="logOut()">Log Out</button>
+        <div class="my-5 px-5 py-2 pb-5 border border-gray-600 rounded-md">
+            <h2 class="text-xl font-bold my-2">Get Involved</h2>
+            <p>To view the status of upcoming changes, head over to the <a href="https://github.com/users/CatboyEngineering/projects/1" target="_blank" class="text-blue-800 dark:text-blue-600 hover:text-blue-500 underline">Progress Tracker</a>!</p>
+        </div>
+
+        <app-name-change-form></app-name-change-form>
+
+        <button class="bg-violet-950 text-white font-bold rounded-md px-3 py-2 hover:bg-violet-900" (click)="logOut()">Log Out</button>
     </div>
 </div>

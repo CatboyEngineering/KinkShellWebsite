@@ -30,7 +30,8 @@ export class LoginFormComponent {
     if (this.loginForm.valid) {
       let request: AccountLoginRequest = {
         username: this.loginForm.controls.username.value,
-        password: this.loginForm.controls.password.value
+        password: this.loginForm.controls.password.value,
+        clientVersionString: "webinterface"
       };
 
       this.authStateService.onLoginRequest(request);
