@@ -4,58 +4,64 @@ import { AuthStateService } from '../../store/auth-state/auth-state.service';
 import { Router } from '@angular/router';
 import { Observable, catchError, filter, finalize, map, switchMap, take, withLatestFrom } from 'rxjs';
 import { environment } from '../../../environments/environment.dev';
+import { CaptchaService } from '../captcha-service/captcha.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HTTPService {
-  constructor(private http: HttpClient, private authStateService: AuthStateService, private router: Router) {}
+  constructor(private http: HttpClient, private authStateService: AuthStateService, private captchaService: CaptchaService) {}
 
-  GET<T>(url: string): Observable<HttpResponse<T>> {
+  GET<T>(url: string, action: string): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap((authToken) => {
-        let call = this.http.get<T>(environment.api_base + url, this.httpCallOptions(authToken));
+      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
+      switchMap(([authToken, captchaToken]) => {
+        let call = this.http.get<T>(environment.api_base + url, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
       })
     );
   }
 
-  POST<T>(url: string, body: any): Observable<HttpResponse<T>> {
+  POST<T>(url: string, body: any, action: string): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap((authToken) => {
-        let call = this.http.post<T>(environment.api_base + url, body, this.httpCallOptions(authToken));
+      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
+      switchMap(([authToken, captchaToken]) => {
+        let call = this.http.post<T>(environment.api_base + url, body, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
       })
     );
   }
 
-  PUT<T>(url: string, body: any): Observable<HttpResponse<T>> {
+  PUT<T>(url: string, body: any, action: string): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap((authToken) => {
-        let call = this.http.put<T>(environment.api_base + url, body, this.httpCallOptions(authToken));
+      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
+      switchMap(([authToken, captchaToken]) => {
+        let call = this.http.put<T>(environment.api_base + url, body, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
       })
     );
   }
 
-  PATCH<T>(url: string, body: any): Observable<HttpResponse<T>> {
+  PATCH<T>(url: string, body: any, action: string): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap((authToken) => {
-        let call = this.http.patch<T>(environment.api_base + url, body, this.httpCallOptions(authToken));
+      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
+      switchMap(([authToken, captchaToken]) => {
+        let call = this.http.patch<T>(environment.api_base + url, body, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
       })
     );
   }
 
-  DELETE<T>(url: string): Observable<HttpResponse<T>> {
+  DELETE<T>(url: string, action: string): Observable<HttpResponse<T>> {
     return this.authStateService.authToken$.pipe(
       take(1),
-      switchMap((authToken) => {
-        let call = this.http.delete<T>(environment.api_base + url, this.httpCallOptions(authToken));
+      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
+      switchMap(([authToken, captchaToken]) => {
+        let call = this.http.delete<T>(environment.api_base + url, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
       })
     );
@@ -71,9 +77,9 @@ export class HTTPService {
     );
   }
 
-  private httpCallOptions(authToken: string): any {
+  private httpCallOptions(authToken: string, captchaToken: string): any {
     return {
-      headers: { Authorization: 'Bearer ' + authToken },
+      headers: { Authorization: 'Bearer ' + authToken, 'X-Captcha-Token': captchaToken },
       observe: 'response'
     };
   }

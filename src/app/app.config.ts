@@ -10,6 +10,8 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AuthStateEffects } from './store/auth-state/auth-state.effects';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AppDetailsStateEffects } from './store/app-details-state/app-detauls-state.effects';
+import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service, RecaptchaLoaderService, RecaptchaSettings } from 'ng-recaptcha';
+import { environment } from '../environments/environment.dev';
 
 export const metaReducers: MetaReducer[] = [localstorageMetaReducer];
 
@@ -18,7 +20,13 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(rootReducer, { metaReducers: metaReducers }),
     provideEffects([AuthStateEffects, AppDetailsStateEffects]),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideHttpClient(withFetch())
+    provideStoreDevtools({ maxAge: 25, logOnly: !environment.production }),
+    provideHttpClient(withFetch()),
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: { siteKey: "6LfJH6kpAAAAAB5TGSlE098R0HU5E32cbrjsa8f0" } as RecaptchaSettings,
+    },
+    ReCaptchaV3Service,
+    RecaptchaLoaderService
   ]
 };

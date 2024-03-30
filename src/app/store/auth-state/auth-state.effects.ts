@@ -20,7 +20,7 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.registerAttempt),
       mergeMap(action =>
-        this.httpService.PUT<AccountAuthenticatedResponse>('account', action.request).pipe(
+        this.httpService.PUT<AccountAuthenticatedResponse>('account', action.request, "REGISTER_ACCOUNT").pipe(
           map(response => {
             return AuthStateActions.registerSuccess({ response: response.body! });
           }),
@@ -47,7 +47,7 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.loginAttempt),
       mergeMap(action =>
-        this.httpService.POST<AccountAuthenticatedResponse>('account', action.request).pipe(
+        this.httpService.POST<AccountAuthenticatedResponse>('account', action.request, "LOG_IN").pipe(
           map(response => {
               return AuthStateActions.loginSuccess({ response: response.body! });
           }),
@@ -74,7 +74,7 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.nameChangeAttempt),
       mergeMap(action =>
-        this.httpService.PATCH<NameChangeResponse>('account', action.request).pipe(
+        this.httpService.PATCH<NameChangeResponse>('account', action.request, "CHANGE_NAME").pipe(
           map(response => {
               return AuthStateActions.nameChangeSuccess({ response: response.body! });
           }),
@@ -90,7 +90,7 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.logOutAttempt),
       mergeMap(() =>
-        this.httpService.POST<any>('logout', {}).pipe(
+        this.httpService.POST<any>('logout', {}, "LOG_OUT").pipe(
           map(response => {
               return AuthStateActions.logOutSuccess();
           }),
@@ -117,7 +117,7 @@ export class AuthStateEffects {
   this.actions$.pipe(
     ofType(AuthStateActions.deleteAttempt),
     mergeMap(() =>
-      this.httpService.DELETE<any>('account').pipe(
+      this.httpService.DELETE<any>('account', "DELETE_ACCOUNT").pipe(
         map(response => {
             return AuthStateActions.deleteSuccess();
         })
