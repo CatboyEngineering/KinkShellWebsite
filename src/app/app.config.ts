@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     {
       provide: RECAPTCHA_V3_SITE_KEY,
-      useValue: { siteKey: "6LfJH6kpAAAAAB5TGSlE098R0HU5E32cbrjsa8f0" } as RecaptchaSettings,
+      useValue: "6LfJH6kpAAAAAB5TGSlE098R0HU5E32cbrjsa8f0",
     },
     ReCaptchaV3Service,
     RecaptchaLoaderService
