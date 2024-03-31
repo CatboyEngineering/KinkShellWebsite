@@ -23,13 +23,16 @@ export class RegisterFormComponent {
     this.registerForm = this.formBuilder.group<RegisterForm>({
       username: this.formBuilder.nonNullable.control('', {
         updateOn: 'submit',
-        validators: Validators.compose([Validators.required, Validators.pattern("^[a-z0-9]{6,}$")])
+        validators: Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,}$')])
       }),
       password: this.formBuilder.nonNullable.control('', {
         updateOn: 'submit',
-        validators: Validators.compose([Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")])
+        validators: Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')])
       }),
-      displayName: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-\'_]{8,32}$/)])}),
+      displayName: this.formBuilder.nonNullable.control('', {
+        updateOn: 'submit',
+        validators: Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-\'_]{8,32}$/)])
+      }),
       betaPassword: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required })
     });
   }
@@ -39,7 +42,7 @@ export class RegisterFormComponent {
 
     if (this.registerForm.valid) {
       let request: AccountCreateRequest = {
-        username: this.registerForm.controls.username.value,
+        username: this.registerForm.controls.username.value.toLowerCase(),
         password: this.registerForm.controls.password.value,
         displayName: this.registerForm.controls.displayName.value,
         betaPassword: this.registerForm.controls.betaPassword.value
