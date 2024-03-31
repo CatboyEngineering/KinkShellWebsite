@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse }
 import { Injectable } from '@angular/core';
 import { AuthStateService } from '../../store/auth-state/auth-state.service';
 import { Router } from '@angular/router';
-import { Observable, catchError, filter, finalize, map, switchMap, take, withLatestFrom } from 'rxjs';
+import { Observable, catchError, combineLatest, filter, finalize, map, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs';
 import { environment } from '../../../environments/environment.dev';
 import { CaptchaService } from '../captcha-service/captcha.service';
 
@@ -13,9 +13,8 @@ export class HTTPService {
   constructor(private http: HttpClient, private authStateService: AuthStateService, private captchaService: CaptchaService) {}
 
   GET<T>(url: string, action: string): Observable<HttpResponse<T>> {
-    return this.authStateService.authToken$.pipe(
+    return combineLatest([this.authStateService.authToken$, this.captchaService.createCaptchaToken$(action)]).pipe(
       take(1),
-      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
       switchMap(([authToken, captchaToken]) => {
         let call = this.http.get<T>(environment.api_base + url, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
@@ -24,9 +23,8 @@ export class HTTPService {
   }
 
   POST<T>(url: string, body: any, action: string): Observable<HttpResponse<T>> {
-    return this.authStateService.authToken$.pipe(
+    return combineLatest([this.authStateService.authToken$, this.captchaService.createCaptchaToken$(action)]).pipe(
       take(1),
-      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
       switchMap(([authToken, captchaToken]) => {
         let call = this.http.post<T>(environment.api_base + url, body, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
@@ -35,9 +33,8 @@ export class HTTPService {
   }
 
   PUT<T>(url: string, body: any, action: string): Observable<HttpResponse<T>> {
-    return this.authStateService.authToken$.pipe(
+    return combineLatest([this.authStateService.authToken$, this.captchaService.createCaptchaToken$(action)]).pipe(
       take(1),
-      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
       switchMap(([authToken, captchaToken]) => {
         let call = this.http.put<T>(environment.api_base + url, body, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
@@ -46,9 +43,8 @@ export class HTTPService {
   }
 
   PATCH<T>(url: string, body: any, action: string): Observable<HttpResponse<T>> {
-    return this.authStateService.authToken$.pipe(
+    return combineLatest([this.authStateService.authToken$, this.captchaService.createCaptchaToken$(action)]).pipe(
       take(1),
-      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
       switchMap(([authToken, captchaToken]) => {
         let call = this.http.patch<T>(environment.api_base + url, body, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
@@ -57,9 +53,8 @@ export class HTTPService {
   }
 
   DELETE<T>(url: string, action: string): Observable<HttpResponse<T>> {
-    return this.authStateService.authToken$.pipe(
+    return combineLatest([this.authStateService.authToken$, this.captchaService.createCaptchaToken$(action)]).pipe(
       take(1),
-      withLatestFrom(this.captchaService.createCaptchaToken$(action)),
       switchMap(([authToken, captchaToken]) => {
         let call = this.http.delete<T>(environment.api_base + url, this.httpCallOptions(authToken, captchaToken));
         return this.mapResponse<T>(call);
