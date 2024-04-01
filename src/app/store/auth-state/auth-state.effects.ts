@@ -86,6 +86,33 @@ export class AuthStateEffects {
     )
   );
 
+  passwordChangeAttempt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.changePasswordAttempt),
+      mergeMap(action =>
+        this.httpService.PATCH<NameChangeResponse>('account-details', action.request, "CHANGE_PASSWORD").pipe(
+          map(() => {
+              return AuthStateActions.changePasswordSuccess();
+          }),
+          catchError(error => {
+            return of(AuthStateActions.authFailure({ form: FormName.CHANGE_PASSWORD, error: error }));
+          })
+        )
+      )
+    )
+  );
+
+  passwordChangeSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthStateActions.changePasswordSuccess),
+        tap(() => {
+          this.router.navigate(['/user']);
+        })
+      ),
+    { dispatch: false }
+  );
+
   logOutAttempt$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.logOutAttempt),

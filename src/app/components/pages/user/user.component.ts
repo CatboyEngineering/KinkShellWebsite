@@ -3,11 +3,12 @@ import { AuthStateService } from '../../../store/auth-state/auth-state.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { NameChangeFormComponent } from '../../forms/name-change-form/name-change-form.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [AsyncPipe, NameChangeFormComponent],
+  imports: [AsyncPipe, NameChangeFormComponent, RouterLink],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
