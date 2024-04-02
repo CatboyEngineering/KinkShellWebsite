@@ -2,12 +2,12 @@
   <ui-form-error [formName]="FormName.LOG_IN"></ui-form-error>
 
   <div class="my-2">
-    <ui-form-field-error [form]="form" [errorFor]="'username'"></ui-form-field-error>
+    <ui-form-field-error [form]="form" [errorFor]="'username'" [errorType]="'required'"></ui-form-field-error>
     <p class="text-sm">Username</p>
     <input type="text" placeholder="Username" formControlName="username" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
   </div>
   <div class="my-2">
-    <ui-form-field-error [form]="form" [errorFor]="'password'"></ui-form-field-error>
+    <ui-form-field-error [form]="form" [errorFor]="'password'" [errorType]="'required'"></ui-form-field-error>
     <p class="text-sm">Password</p>
     <input type="password" placeholder="Password" formControlName="password" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
   </div>

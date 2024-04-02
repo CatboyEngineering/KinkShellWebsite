@@ -5,7 +5,7 @@
     <p>If you'd like to change your display name shown to other users, you can do so below.</p>
 
     <div class="my-2 inline-block">
-      <ui-form-field-error [form]="form" [errorFor]="'displayName'"></ui-form-field-error>
+      <ui-form-field-error [form]="form" [errorFor]="'displayName'" [errorType]="'required'"></ui-form-field-error>
       <input type="text" placeholder="New Display Name" formControlName="displayName" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
     </div>
   

@@ -9,20 +9,21 @@
             <div class="flex-auto"></div>
             <div class="flex-initial self-center text-center">
                 <ul class="py-2 md:py-0">
-                    <li class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/guide']">Guide</li>
-                    <li class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/contribute']">Contribute</li>
-                    <li class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/help']">Help</li>
+                    <li class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/guide']"><i class="fa-solid fa-book mx-2"></i>Guide</li>
+                    <li class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/contribute']"><i class="fa-solid fa-code-pull-request mx-2"></i>Contribute</li>
+                    <li class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/help']"><i class="fa-regular fa-circle-question mx-2"></i>Help</li>
                 </ul>
             </div>
             <div class="flex-auto"></div>
             <div class="basis-full md:basis-auto flex-initial self-center">
                 <ul class="text-center md:text-inherit border-t md:border-none py-2 md:py-0">
                     <ng-container *ngIf="isLoggedIn$ | async; else guestUser">
-                        <li class="inline-block mx-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" (click)="logOut()">Log Out</li>
+                        <li class="inline-block mx-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/user']"><i class="fa-solid fa-user mx-2"></i>Account</li>
+                        <li class="inline-block mx-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" (click)="logOut()"><i class="fa-solid fa-arrow-right-from-bracket mx-2"></i>Log Out</li>
                     </ng-container>
                     <ng-template #guestUser>
-                        <li class="inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/register']">Register</li>
-                        <li class="inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/login']">Log In</li>
+                        <li class="inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/register']"><i class="fa-solid fa-plus mx-2"></i>Register</li>
+                        <li class="inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/login']"><i class="fa-solid fa-arrow-right-to-bracket mx-2"></i>Log In</li>
                     </ng-template>
                 </ul>
             </div>
