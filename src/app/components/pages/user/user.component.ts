@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthStateService } from '../../../store/auth-state/auth-state.service';
 import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { NameChangeFormComponent } from '../../forms/name-change-form/name-change-form.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { ChangePasswordFormComponent } from '../../forms/change-password-form/change-password-form.component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [AsyncPipe, NameChangeFormComponent, RouterLink],
+  imports: [AsyncPipe, NameChangeFormComponent, ChangePasswordFormComponent, RouterLink, CommonModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  userID$: Observable<String>;
-  displayName$: Observable<String>;
+  userID$: Observable<string>;
+  displayName$: Observable<string>;
 
   isDeleting = false;
 
@@ -23,15 +24,17 @@ export class UserComponent {
     this.displayName$ = this.authStateService.displayName$;
   }
 
-  logOut(): void {
-    this.authStateService.onLogOut();
-  }
-
   deleteAccount(): void {
-    if(!this.isDeleting) {
+    if (!this.isDeleting) {
       this.isDeleting = true;
-    }else{
+    } else {
       this.authStateService.onDeleteAccountRequest();
     }
+  }
+
+  copy(text: string) {
+    try {
+      navigator.clipboard.writeText(text);
+    } catch {}
   }
 }

@@ -20,19 +20,27 @@ export class NameChangeFormComponent {
 
   constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService) {
     this.nameChangeForm = this.formBuilder.group<NameChangeForm>({
-      displayName: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-\'_]{8,32}$/)])}),
+      displayName: this.formBuilder.nonNullable.control('', {
+        updateOn: 'submit',
+        validators: Validators.compose([
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(32),
+          Validators.pattern(/^[a-zA-Z0-9\s\-\'_]+$/)
+        ])
+      })
     });
   }
 
   submit() {
     if (this.nameChangeForm.valid) {
       let request: NameChangeRequest = {
-        displayName: this.nameChangeForm.controls.displayName.value,
+        displayName: this.nameChangeForm.controls.displayName.value
       };
 
       this.authStateService.onNameChangeRequest(request);
 
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
       window.focus();
     }
   }
