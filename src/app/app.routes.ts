@@ -6,6 +6,9 @@ import { RegisterComponent } from './components/pages/register/register.componen
 import { UserComponent } from './components/pages/user/user.component';
 import { canActivateAuthenticated } from './guards/auth-guard/can-activate-authenticated';
 import { ChangePasswordComponent } from './components/pages/change-password/change-password.component';
+import { GuideComponent } from './components/pages/guide/guide.component';
+import { ContributeComponent } from './components/pages/contribute/contribute.component';
+import { HelpComponent } from './components/pages/help/help.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +23,18 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'guide',
+    component: GuideComponent
+  },
+  {
+    path: 'contribute',
+    component: ContributeComponent
+  },
+  {
+    path: 'help',
+    component: HelpComponent
   },
   {
     path: 'user',

@@ -1,0 +1,31 @@
+<nav class="w-full p-3 md:px-5 mb-3 bg-ksPinot text-gray-100 font-semibold shadow-md">
+    <div class="flex flex-wrap">
+        <h1 class="flex-initial self-center text-2xl md:text-3xl hover:cursor-pointer" [routerLink]="['/']">KinkShell</h1>
+        <div class="md:hidden flex-auto"></div>
+        <div class="block self-center md:hidden" (click)="this.toggleExpanded()">
+            <i class="fa-solid fa-bars text-3xl p-1 self-center"></i>
+        </div>
+        <div class="{{(expanded ? 'flex' : 'hidden md:flex')}} basis-full md:basis-auto border-t md:border-none flex-auto self-center flex-wrap">
+            <div class="flex-auto"></div>
+            <div class="flex-initial self-center text-center">
+                <ul class="py-2 md:py-0">
+                    <li class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/guide']">Guide</li>
+                    <li class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/contribute']">Contribute</li>
+                    <li class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/help']">Help</li>
+                </ul>
+            </div>
+            <div class="flex-auto"></div>
+            <div class="basis-full md:basis-auto flex-initial self-center">
+                <ul class="text-center md:text-inherit border-t md:border-none py-2 md:py-0">
+                    <ng-container *ngIf="isLoggedIn$ | async; else guestUser">
+                        <li class="inline-block mx-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" (click)="logOut()">Log Out</li>
+                    </ng-container>
+                    <ng-template #guestUser>
+                        <li class="inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/register']">Register</li>
+                        <li class="inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" [routerLink]="['/login']">Log In</li>
+                    </ng-template>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

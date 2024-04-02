@@ -7,5 +7,7 @@
   "bracketSpacing": true,
   "semi": true,
   "htmlWhitespaceSensitivity": "ignore",
-  "bracketSameLine": true
+  "bracketSameLine": true,
+  "proseWrap": "always",
+  "editor.formatOnSave": true
 }
