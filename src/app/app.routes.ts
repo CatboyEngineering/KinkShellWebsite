@@ -9,6 +9,8 @@ import { ChangePasswordComponent } from './components/pages/change-password/chan
 import { GuideComponent } from './components/pages/guide/guide.component';
 import { ContributeComponent } from './components/pages/contribute/contribute.component';
 import { HelpComponent } from './components/pages/help/help.component';
+import { PrivacyComponent } from './components/pages/privacy/privacy.component';
+import { TermsComponent } from './components/pages/terms/terms.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +37,14 @@ export const routes: Routes = [
   {
     path: 'help',
     component: HelpComponent
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyComponent
+  },
+  {
+    path: 'terms',
+    component: TermsComponent
   },
   {
     path: 'user',

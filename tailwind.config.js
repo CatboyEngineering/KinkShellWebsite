@@ -4,10 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ksNavy: "#23325A",
-        ksCream: "#F3EEEB",
-        ksSandy: "#DECCCA",
-        ksPinot: "#653666"
+        ksNavy: '#23325A',
+        ksCream: '#F3EEEB',
+        ksSandy: '#DECCCA',
+        ksPinot: '#653666'
+      },
+      fontFamily: {
+        lilitaOne: ['Lilita One', 'sans-serif']
       }
     }
   },

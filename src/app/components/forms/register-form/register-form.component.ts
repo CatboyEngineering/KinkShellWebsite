@@ -10,11 +10,12 @@ import { UiFormErrorComponent } from '../../ui/ui-form-error/ui-form-error.compo
 import { CommonModule } from '@angular/common';
 import { LoadingService } from '../../../services/loading-service/loading.service';
 import { BehaviorSubject } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register-form',
   standalone: true,
-  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent, CommonModule],
+  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent, CommonModule, RouterLink],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css'
 })
@@ -24,9 +25,14 @@ export class RegisterFormComponent {
 
   isLoading$: BehaviorSubject<boolean>;
 
-  constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService, private appDetailsStateService: AppDetailsStateService, private loadingService: LoadingService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authStateService: AuthStateService,
+    private appDetailsStateService: AppDetailsStateService,
+    private loadingService: LoadingService
+  ) {
     this.isLoading$ = loadingService.isLoading$;
-    
+
     this.registerForm = this.formBuilder.group<RegisterForm>({
       username: this.formBuilder.nonNullable.control('', {
         updateOn: 'submit',
@@ -42,7 +48,12 @@ export class RegisterFormComponent {
       }),
       displayName: this.formBuilder.nonNullable.control('', {
         updateOn: 'submit',
-        validators: Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(32), Validators.pattern(/^[a-zA-Z0-9\s\-\'_]+$/)])
+        validators: Validators.compose([
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(32),
+          Validators.pattern(/^[a-zA-Z0-9\s\-\'_]+$/)
+        ])
       }),
       betaPassword: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required })
     });
@@ -52,10 +63,10 @@ export class RegisterFormComponent {
     this.appDetailsStateService.onFormErrorsCleared();
 
     if (this.registerForm.valid) {
-      if(this.registerForm.controls.password.value !== this.registerForm.controls.confirmPassword.value) {
+      if (this.registerForm.controls.password.value !== this.registerForm.controls.confirmPassword.value) {
         this.appDetailsStateService.onFormError({
           form: FormName.REGISTER_ACCOUNT,
-          error: "Passwords do not match!"
+          error: 'Passwords do not match!'
         });
 
         return;
