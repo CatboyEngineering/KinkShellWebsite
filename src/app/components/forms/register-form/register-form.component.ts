@@ -7,11 +7,14 @@ import { AppDetailsStateService } from '../../../store/app-details-state/app-det
 import { UiFormFieldErrorComponent } from '../../ui/ui-form-field-error/ui-form-field-error.component';
 import { FormName } from '../../../models/enum/form-name.enum';
 import { UiFormErrorComponent } from '../../ui/ui-form-error/ui-form-error.component';
+import { CommonModule } from '@angular/common';
+import { LoadingService } from '../../../services/loading-service/loading.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-register-form',
   standalone: true,
-  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent],
+  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent, CommonModule],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css'
 })
@@ -19,7 +22,11 @@ export class RegisterFormComponent {
   registerForm: FormGroup<RegisterForm>;
   FormName = FormName;
 
-  constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService, private appDetailsStateService: AppDetailsStateService) {
+  isLoading$: BehaviorSubject<boolean>;
+
+  constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService, private appDetailsStateService: AppDetailsStateService, private loadingService: LoadingService) {
+    this.isLoading$ = loadingService.isLoading$;
+    
     this.registerForm = this.formBuilder.group<RegisterForm>({
       username: this.formBuilder.nonNullable.control('', {
         updateOn: 'submit',

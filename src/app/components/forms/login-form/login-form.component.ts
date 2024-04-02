@@ -7,11 +7,14 @@ import { LoginForm } from '../../../models/form/login-form.interface';
 import { UiFormFieldErrorComponent } from '../../ui/ui-form-field-error/ui-form-field-error.component';
 import { FormName } from '../../../models/enum/form-name.enum';
 import { UiFormErrorComponent } from '../../ui/ui-form-error/ui-form-error.component';
+import { BehaviorSubject } from 'rxjs';
+import { LoadingService } from '../../../services/loading-service/loading.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent],
+  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent, CommonModule],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
@@ -19,7 +22,11 @@ export class LoginFormComponent {
   loginForm: FormGroup<LoginForm>;
   FormName = FormName;
 
-  constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService) {
+  isLoading$: BehaviorSubject<boolean>;
+
+  constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService, private loadingService: LoadingService) {
+    this.isLoading$ = loadingService.isLoading$;
+
     this.loginForm = this.formBuilder.group<LoginForm>({
       username: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required }),
       password: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required })

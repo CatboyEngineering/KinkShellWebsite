@@ -68,5 +68,5 @@
     </div>
   </div>
 
-  <button class="bg-ksNavy font-bold text-gray-100 rounded-md px-3 py-2 mx-1 hover:bg-indigo-900 active:bg-indigo-950" type="submit">Create Account</button>
+  <button [disabled]="isLoading$ | async" class="bg-ksNavy font-bold text-gray-100 rounded-md px-3 py-2 mx-1 hover:bg-indigo-900 active:bg-indigo-950 disabled:bg-slate-500" type="submit">Create Account</button>
 </form>
