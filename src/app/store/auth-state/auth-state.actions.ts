@@ -7,6 +7,7 @@ import { NameChangeRequest } from '../../models/API/request/name-change-request.
 import { NameChangeResponse } from '../../models/API/response/name-change-response.interface';
 import { ChangePasswordRequest } from '../../models/API/request/change-password-request.interface';
 import { Account } from '../../models/account.interface';
+import { UpdateMaxShellsRequest } from '../../models/API/request/update-max-shells-request.interface';
 
 export abstract class AuthStateActions {
   static readonly registerAttempt = createAction('@kinkshell/action/register/attempt', props<{ request: AccountCreateRequest }>());
@@ -26,4 +27,6 @@ export abstract class AuthStateActions {
   static readonly authDataCleared = createAction('@kinkshell/action/authentication/cleared');
   static readonly userListRequested = createAction('@kinkshell/action/userlist/attempt');
   static readonly userListReceived = createAction('@kinkshell/action/userlist/success', props<{ accounts: Account[] }>());
+  static readonly userChangeShellsRequested = createAction('@kinkshell/action/usershells/attempt', props<{ request: UpdateMaxShellsRequest }>());
+  static readonly userChangeShellsReceived = createAction('@kinkshell/action/usershells/success');
 }

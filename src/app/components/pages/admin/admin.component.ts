@@ -23,4 +23,9 @@ export class AdminComponent {
   requestUsers(): void {
     this.authStateService.onRequestGetUserList();
   }
+
+  requestEditShells(): void {
+    // TODO - this needs to be a form that collects: user id (or all), new max
+    // this.authStateService.onRequestAdjustUserShells();
+  }
 }

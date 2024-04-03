@@ -9,6 +9,7 @@ import { NameChangeRequest } from '../../models/API/request/name-change-request.
 import { ChangePasswordRequest } from '../../models/API/request/change-password-request.interface';
 import { FormValidationError } from '../../models/form-validation-error.interface';
 import { Account } from '../../models/account.interface';
+import { UpdateMaxShellsRequest } from '../../models/API/request/update-max-shells-request.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,10 @@ export class AuthStateService {
 
   onRequestGetUserList(): void {
     this.store.dispatch(AuthStateActions.userListRequested());
+  }
+
+  onRequestAdjustUserShells(request: UpdateMaxShellsRequest): void {
+    this.store.dispatch(AuthStateActions.userChangeShellsRequested({ request }));
   }
 
   onDeleteAccountRequest(): void {

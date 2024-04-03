@@ -87,7 +87,7 @@ export class AuthStateEffects {
     )
   );
 
-  passwordChangeAttempt$ = createEffect(() =>
+  changePasswordAttempt$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.changePasswordAttempt),
       mergeMap(action =>
@@ -103,7 +103,7 @@ export class AuthStateEffects {
     )
   );
 
-  passwordChangeSuccess$ = createEffect(
+  changePasswordSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AuthStateActions.changePasswordSuccess),
@@ -141,7 +141,7 @@ export class AuthStateEffects {
     { dispatch: false }
   );
 
-  deleteAccountAttempt$ = createEffect(() =>
+  deleteAttempt$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.deleteAttempt),
       mergeMap(() =>
@@ -154,7 +154,7 @@ export class AuthStateEffects {
     )
   );
 
-  deleteAccountSuccess$ = createEffect(() =>
+  deleteSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.deleteSuccess),
       map(() => {
@@ -181,7 +181,7 @@ export class AuthStateEffects {
     )
   );
 
-  getAccountListRequested$ = createEffect(() =>
+  userListRequested$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.userListRequested),
       mergeMap(() =>
@@ -194,7 +194,29 @@ export class AuthStateEffects {
     )
   );
 
-  getAccountListSuccess$ = createEffect(() => this.actions$.pipe(ofType(AuthStateActions.userListReceived)), { dispatch: false });
+  userListReceived$ = createEffect(() => this.actions$.pipe(ofType(AuthStateActions.userListReceived)), { dispatch: false });
+
+  userChangeShellsRequested$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.userChangeShellsRequested),
+      mergeMap(action =>
+        this.httpService.PATCH<any>('admin/maxshells', action.request, 'EDIT_USER_MAX_SHELLS').pipe(
+          map(() => {
+            return AuthStateActions.userChangeShellsReceived();
+          })
+        )
+      )
+    )
+  );
+
+  userChangeShellsReceived$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.userChangeShellsReceived),
+      map(() => {
+        return AuthStateActions.userListRequested();
+      })
+    )
+  );
 
   private mapAuthFailure(form: FormName, error: HttpErrorResponse): FormValidationError {
     switch (error.status) {
