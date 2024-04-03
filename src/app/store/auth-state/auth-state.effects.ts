@@ -11,6 +11,7 @@ import { FormName } from '../../models/enum/form-name.enum';
 import { FormValidationError } from '../../models/form-validation-error.interface';
 import { AppDetailsStateActions } from '../app-details-state/app-details-state.actions';
 import { NameChangeResponse } from '../../models/API/response/name-change-response.interface';
+import { Account } from '../../models/account.interface';
 
 @Injectable()
 export class AuthStateEffects {
@@ -20,7 +21,7 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.registerAttempt),
       mergeMap(action =>
-        this.httpService.PUT<AccountAuthenticatedResponse>('account', action.request, "REGISTER_ACCOUNT").pipe(
+        this.httpService.PUT<AccountAuthenticatedResponse>('account', action.request, 'REGISTER_ACCOUNT').pipe(
           map(response => {
             return AuthStateActions.registerSuccess({ response: response.body! });
           }),
@@ -47,9 +48,9 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.loginAttempt),
       mergeMap(action =>
-        this.httpService.POST<AccountAuthenticatedResponse>('account', action.request, "LOG_IN").pipe(
+        this.httpService.POST<AccountAuthenticatedResponse>('account', action.request, 'LOG_IN').pipe(
           map(response => {
-              return AuthStateActions.loginSuccess({ response: response.body! });
+            return AuthStateActions.loginSuccess({ response: response.body! });
           }),
           catchError(error => {
             return of(AuthStateActions.authFailure({ form: FormName.LOG_IN, error: error }));
@@ -74,9 +75,9 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.nameChangeAttempt),
       mergeMap(action =>
-        this.httpService.PATCH<NameChangeResponse>('account', action.request, "CHANGE_NAME").pipe(
+        this.httpService.PATCH<NameChangeResponse>('account', action.request, 'CHANGE_NAME').pipe(
           map(response => {
-              return AuthStateActions.nameChangeSuccess({ response: response.body! });
+            return AuthStateActions.nameChangeSuccess({ response: response.body! });
           }),
           catchError(error => {
             return of(AuthStateActions.authFailure({ form: FormName.CHANGE_NAME, error: error }));
@@ -86,13 +87,13 @@ export class AuthStateEffects {
     )
   );
 
-  passwordChangeAttempt$ = createEffect(() =>
+  changePasswordAttempt$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.changePasswordAttempt),
       mergeMap(action =>
-        this.httpService.PATCH<NameChangeResponse>('account-details', action.request, "CHANGE_PASSWORD").pipe(
+        this.httpService.PATCH<NameChangeResponse>('account-details', action.request, 'CHANGE_PASSWORD').pipe(
           map(() => {
-              return AuthStateActions.changePasswordSuccess();
+            return AuthStateActions.changePasswordSuccess();
           }),
           catchError(error => {
             return of(AuthStateActions.authFailure({ form: FormName.CHANGE_PASSWORD, error: error }));
@@ -102,7 +103,7 @@ export class AuthStateEffects {
     )
   );
 
-  passwordChangeSuccess$ = createEffect(
+  changePasswordSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AuthStateActions.changePasswordSuccess),
@@ -117,9 +118,9 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.logOutAttempt),
       mergeMap(() =>
-        this.httpService.POST<any>('logout', {}, "LOG_OUT").pipe(
+        this.httpService.POST<any>('logout', {}, 'LOG_OUT').pipe(
           map(response => {
-              return AuthStateActions.logOutSuccess();
+            return AuthStateActions.logOutSuccess();
           }),
           catchError(error => {
             return of(AuthStateActions.logOutSuccess());
@@ -140,27 +141,27 @@ export class AuthStateEffects {
     { dispatch: false }
   );
 
-  deleteAccountAttempt$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(AuthStateActions.deleteAttempt),
-    mergeMap(() =>
-      this.httpService.DELETE<any>('account', "DELETE_ACCOUNT").pipe(
-        map(response => {
+  deleteAttempt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.deleteAttempt),
+      mergeMap(() =>
+        this.httpService.DELETE<any>('account', 'DELETE_ACCOUNT').pipe(
+          map(response => {
             return AuthStateActions.deleteSuccess();
-        })
+          })
+        )
       )
     )
-  )
-);
+  );
 
-deleteAccountSuccess$ = createEffect(() =>
+  deleteSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.deleteSuccess),
       map(() => {
-        return AuthStateActions.logOutSuccess()
+        return AuthStateActions.logOutSuccess();
       })
     )
-);
+  );
 
   authExpired$ = createEffect(
     () =>
@@ -177,6 +178,46 @@ deleteAccountSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.authFailure),
       map(payload => AppDetailsStateActions.formError({ error: this.mapAuthFailure(payload.form, payload.error) }))
+    )
+  );
+
+  userListRequested$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.userListRequested),
+      mergeMap(() =>
+        this.httpService.GET<Account[]>('admin/users', 'GET_USER_LIST').pipe(
+          map(response => {
+            return AuthStateActions.userListReceived({ accounts: response.body! });
+          })
+        )
+      )
+    )
+  );
+
+  userListReceived$ = createEffect(() => this.actions$.pipe(ofType(AuthStateActions.userListReceived)), { dispatch: false });
+
+  userChangeShellsRequested$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.userChangeShellsRequested),
+      mergeMap(action =>
+        this.httpService.PATCH<any>('admin/maxshells', action.request, 'EDIT_USER_MAX_SHELLS').pipe(
+          map(() => {
+            return AuthStateActions.userChangeShellsReceived();
+          })
+        )
+      )
+    )
+  );
+
+  userChangeShellsReceived$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.userChangeShellsReceived),
+      map(() => {
+        return AuthStateActions.userListRequested();
+      }),
+      catchError(error => {
+        return of(AuthStateActions.authFailure({ form: FormName.UPDATE_SHELLS, error: error }));
+      })
     )
   );
 

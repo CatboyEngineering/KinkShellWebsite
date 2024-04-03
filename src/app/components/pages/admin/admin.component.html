@@ -1,0 +1,23 @@
+<h1 class="font-lilitaOne text-2xl text-center">Admin Control Panel</h1>
+<hr class="border border-ksNavy dark:border-ksPinot my-7" />
+
+<app-update-shells-form></app-update-shells-form>
+
+<!-- User List -->
+<div class="border border-ksNavy dark:border-ksPinot rounded-md p-3">
+  <button class="bg-ksNavy font-bold text-gray-100 rounded-md px-3 py-2 mx-1 mb-2 hover:bg-indigo-900 active:bg-indigo-950" (click)="requestUsers()">
+    Pull Account List
+  </button>
+  <div *ngIf="accounts$ | async as accounts">
+    <div *ngFor="let account of accounts" class="inline-block mx-1 my-1">
+      <div class="py-1 px-3 rounded-md bg-ksCream dark:bg-ksPinot w-fit text-sm">
+        <p class="border-b border-ksPinot">{{ account.displayName }} - {{ account.maxAllowedShells }} shells allowed</p>
+        <pre class="inline-block">{{ account.accountID }}</pre>
+        <button ngxClipboard [cbContent]="account.accountID" class="hidden md:inline-block ml-2">
+          <i
+            class="fa-regular fa-copy text-gray-600 dark:text-ksCream hover:text-ksPinot dark:hover:text-ksNavy hover:cursor-pointer active:text-ksNavy"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

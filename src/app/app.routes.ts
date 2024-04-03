@@ -7,6 +7,8 @@ import { UserComponent } from './components/pages/user/user.component';
 import { canActivateAuthenticated } from './guards/auth-guard/can-activate-authenticated';
 import { PrivacyComponent } from './components/pages/privacy/privacy.component';
 import { TermsComponent } from './components/pages/terms/terms.component';
+import { AdminComponent } from './components/pages/admin/admin.component';
+import { canActivateAdmin } from './guards/admin-guard/can-activate-admin';
 
 export const routes: Routes = [
   {
@@ -34,6 +36,11 @@ export const routes: Routes = [
     path: 'user',
     component: UserComponent,
     canActivate: [canActivateAuthenticated()]
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [canActivateAuthenticated(), canActivateAdmin()]
   },
   {
     path: '**',

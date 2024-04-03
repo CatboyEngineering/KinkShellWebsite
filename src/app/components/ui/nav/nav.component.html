@@ -45,6 +45,14 @@
         <ul class="text-center md:text-inherit border-t md:border-none py-2 md:py-0">
           <ng-container *ngIf="isLoggedIn$ | async; else guestUser">
             <li
+              *ngIf="isAdmin$ | async"
+              class="inline-block mx-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy"
+              [routerLink]="['/admin']"
+              (click)="expanded = false">
+              <i class="fa-solid fa-toolbox mx-2"></i>
+              Admin
+            </li>
+            <li
               class="inline-block mx-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy"
               [routerLink]="['/user']"
               (click)="expanded = false">

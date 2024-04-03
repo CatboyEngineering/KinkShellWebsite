@@ -11,7 +11,8 @@ export const authStateReducer = createReducer(
       ...state,
       authToken: action.response.authToken,
       accountID: action.response.accountID,
-      displayName: action.response.displayName
+      displayName: action.response.displayName,
+      isAdmin: action.response.isAdmin || false
     })
   ),
   on(
@@ -20,7 +21,8 @@ export const authStateReducer = createReducer(
       ...state,
       authToken: action.response.authToken,
       accountID: action.response.accountID,
-      displayName: action.response.displayName
+      displayName: action.response.displayName,
+      isAdmin: action.response.isAdmin || false
     })
   ),
   on(
@@ -28,6 +30,13 @@ export const authStateReducer = createReducer(
     (state, action): AuthState => ({
       ...state,
       displayName: action.response.displayName
+    })
+  ),
+  on(
+    AuthStateActions.userListReceived,
+    (state, action): AuthState => ({
+      ...state,
+      accountList: action.accounts
     })
   ),
   on(AuthStateActions.logOutSuccess, (state, action): AuthState => authInitialState),
