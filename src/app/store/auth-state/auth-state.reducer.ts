@@ -11,7 +11,8 @@ export const authStateReducer = createReducer(
       ...state,
       authToken: action.response.authToken,
       accountID: action.response.accountID,
-      displayName: action.response.displayName
+      displayName: action.response.displayName,
+      isAdmin: action.response.isAdmin || false
     })
   ),
   on(
@@ -20,7 +21,8 @@ export const authStateReducer = createReducer(
       ...state,
       authToken: action.response.authToken,
       accountID: action.response.accountID,
-      displayName: action.response.displayName
+      displayName: action.response.displayName,
+      isAdmin: action.response.isAdmin || false
     })
   ),
   on(

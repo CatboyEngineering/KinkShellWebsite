@@ -14,11 +14,11 @@ import { RouterLink } from '@angular/router';
 export class NavComponent {
   expanded = false;
   isLoggedIn$: Observable<boolean>;
+  isAdmin$: Observable<boolean>;
 
   constructor(private authStateService: AuthStateService) {
-    this.isLoggedIn$ = authStateService.authToken$.pipe(
-      map(token => !!token)
-    );
+    this.isLoggedIn$ = authStateService.authToken$.pipe(map(token => !!token));
+    this.isAdmin$ = authStateService.isAdmin$;
   }
 
   logOut(): void {

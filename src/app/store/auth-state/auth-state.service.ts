@@ -4,7 +4,7 @@ import { Observable, take } from 'rxjs';
 import { AuthStateActions } from './auth-state.actions';
 import { AccountCreateRequest } from '../../models/API/request/account-create-request.interface';
 import { AccountLoginRequest } from '../../models/API/request/account-login-request.interface';
-import { selectAuthToken, selectDisplayName, selectUserID } from './auth-state.selectors';
+import { selectAuthToken, selectDisplayName, selectIsAdmin, selectUserID } from './auth-state.selectors';
 import { NameChangeRequest } from '../../models/API/request/name-change-request.interface';
 import { ChangePasswordRequest } from '../../models/API/request/change-password-request.interface';
 import { FormValidationError } from '../../models/form-validation-error.interface';
@@ -13,9 +13,10 @@ import { FormValidationError } from '../../models/form-validation-error.interfac
   providedIn: 'root'
 })
 export class AuthStateService {
-  authToken$: Observable<string> = this.store.select(selectAuthToken)
+  authToken$: Observable<string> = this.store.select(selectAuthToken);
   userID$: Observable<string> = this.store.select(selectUserID);
   displayName$: Observable<string> = this.store.select(selectDisplayName);
+  isAdmin$: Observable<boolean> = this.store.select(selectIsAdmin);
 
   constructor(private store: Store) {}
 
