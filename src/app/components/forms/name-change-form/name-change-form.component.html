@@ -1,14 +1,26 @@
-<form [formGroup]="nameChangeForm" #form="ngForm" (ngSubmit)="submit()" class="my-5 px-5 py-2 pb-5 border border-gray-600 rounded-md">
-    <ui-form-error [formName]="FormName.CHANGE_NAME"></ui-form-error>
-  
-    <h2 class="text-xl font-bold my-2">Name Change</h2>
-    <p>If you'd like to change your display name shown to other users, you can do so below.</p>
+<form [formGroup]="nameChangeForm" #form="ngForm" (ngSubmit)="submit()" class="my-5 px-5 py-2 pb-5 bg-ksNavy text-gray-100 rounded-md">
+  <h2 class="text-xl font-lilitaOne">Change Display Name</h2>
+  <p>If you'd like to change your display name shown to other users, you can do so below.</p>
 
-    <div class="my-2 inline-block">
-      <ui-form-field-error [form]="form" [errorFor]="'displayName'"></ui-form-field-error>
+  <ui-form-error [formName]="FormName.CHANGE_NAME"></ui-form-error>
+
+  <div class="mt-2 text-center mx-auto">
+    <div>
+      <ui-form-field-error [form]="form" [errorFor]="'displayName'" [errorType]="'required'">This field is required</ui-form-field-error>
+      <ui-form-field-error [form]="form" [errorFor]="'displayName'" [errorType]="'minlength'">
+        Display names must be at least 8 characters
+      </ui-form-field-error>
+      <ui-form-field-error [form]="form" [errorFor]="'displayName'" [errorType]="'maxlength'">
+        Display names cannot exceed 32 characters
+      </ui-form-field-error>
+      <ui-form-field-error [form]="form" [errorFor]="'displayName'" [errorType]="'pattern'">
+        Display names can only include letters, numbers, _, -, and '
+      </ui-form-field-error>
       <input type="text" placeholder="New Display Name" formControlName="displayName" class="px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
     </div>
-  
-    <button class="inline-block bg-green-900 text-white font-bold rounded-md px-3 py-2 mx-1 hover:bg-green-800" type="submit">Change Name</button>
-  </form>
-  
+
+    <button class="bg-ksPinot font-bold text-gray-100 rounded-md px-3 py-2 my-3 mx-1 hover:bg-purple-950 active:bg-violet-950" type="submit">
+      Change Name
+    </button>
+  </div>
+</form>

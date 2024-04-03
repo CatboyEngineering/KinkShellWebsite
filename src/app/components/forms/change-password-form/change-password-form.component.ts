@@ -21,17 +21,21 @@ export class ChangePasswordFormComponent {
 
   constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService, private appDetailsState: AppDetailsStateService) {
     this.changePasswordForm = this.formBuilder.group<ChangePasswordForm>({
-      newPassword: this.formBuilder.nonNullable.control('', { validators: Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')]) }),
-      confirmPassword: this.formBuilder.nonNullable.control('', { validators: Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')]) })
+      newPassword: this.formBuilder.nonNullable.control('', {
+        validators: Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).+$')])
+      }),
+      confirmPassword: this.formBuilder.nonNullable.control('', {
+        validators: Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).+$')])
+      })
     });
   }
 
   submit() {
     if (this.changePasswordForm.valid) {
-      if(this.changePasswordForm.controls.newPassword.value !== this.changePasswordForm.controls.confirmPassword.value) {
+      if (this.changePasswordForm.controls.newPassword.value !== this.changePasswordForm.controls.confirmPassword.value) {
         this.appDetailsState.onFormError({
           form: FormName.CHANGE_PASSWORD,
-          error: "Passwords do not match!"
+          error: 'Passwords do not match!'
         });
 
         return;

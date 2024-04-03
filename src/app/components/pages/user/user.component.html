@@ -1,28 +1,47 @@
 <div class="text-center">
-    <h1 class="text-2xl font-bold my-2 mb-5">Welcome, {{displayName$ | async}}!</h1>
-
-    <div class="p-5 border border-gray-400 rounded-md">
-        <p><strong>Your ID:</strong> {{userID$ | async}}</p>
-
-        <div class="my-5 px-5 py-2 pb-5 border border-gray-600 rounded-md">
-            <h2 class="text-xl font-bold my-2">Next Steps</h2>
-            <p>Thanks for registering for KinkShell! Now that your login details and ID have been created, the next step is to install the mod in-game.
-                Click the link below to view the plugin repository and instructions to add the repository to your game</p>
-            <p class="m-2 p-3 border border-gray-400 rounded-md"><a href="https://github.com/CatboyEngineering/Plugins" target="_blank" class="text-blue-800 dark:text-blue-600 hover:text-blue-500 underline">CatboyEngineering Plugin Repo</a></p>
-            <p>Once the repository has been added, you can then follow the below instructions to install KinkShell.</p>
-            <p class="m-2 p-3 border border-gray-400 rounded-md"><a href="https://github.com/CatboyEngineering/KinkShellClient" target="_blank" class="text-blue-800 dark:text-blue-600 hover:text-blue-500 underline">KinkShell Setup Instructions</a></p>
-            <p>Make sure to write down your ID above. It's safe to share with other KinkShell users, and in fact, they'll need to know it in order to add you to their KinkShells. If you ever lose it, come back here to see it again.</p>
-        </div>
-
-        <div class="my-5 px-5 py-2 pb-5 border border-gray-600 rounded-md">
-            <h2 class="text-xl font-bold my-2">Get Involved</h2>
-            <p>To view the status of upcoming changes, head over to the <a href="https://github.com/users/CatboyEngineering/projects/1" target="_blank" class="text-blue-800 dark:text-blue-600 hover:text-blue-500 underline">Progress Tracker</a>!</p>
-        </div>
-
-        <app-name-change-form></app-name-change-form>
-
-        <button class="bg-violet-950 text-white font-bold rounded-md px-3 py-2 mx-1 hover:bg-violet-900" (click)="logOut()">Log Out</button>
-        <button class="inline-block bg-green-900 text-white font-bold rounded-md px-3 py-2 mx-1 hover:bg-green-800" [routerLink]="['/change-password']">Change Password</button>
-        <button class="bg-red-900 text-white font-bold rounded-md px-3 py-2 mx-1 hover:bg-violet-900" (click)="deleteAccount()">{{isDeleting ? "Confirm Delete?" : "Delete Account"}}</button>
+  <h1 class="text-2xl md:text-3xl font-lilitaOne my-2 mb-5">Welcome, {{ displayName$ | async }}!</h1>
+  <div class="p-5 border border-ksNavy dark:border-ksPinot rounded-md">
+    <h2 class="text-xl font-lilitaOne">Your ID:</h2>
+    <div *ngIf="userID$ | async as userID" class="py-1 px-3 my-1 rounded-md bg-ksCream dark:bg-ksPinot w-fit mx-auto text-sm">
+      <pre class="inline-block">{{ userID }}</pre>
+      <i
+        class="hidden md:inline-block ml-2 fa-regular fa-copy text-gray-600 dark:text-ksCream hover:text-ksPinot dark:hover:text-ksNavy hover:cursor-pointer active:text-ksNavy"
+        (click)="copy(userID)"></i>
     </div>
+    <p class="text-sm">Share this ID with other KinkShell users so they can add you to their shells.</p>
+  </div>
+</div>
+
+<hr class="border border-ksNavy dark:border-ksPinot my-8" />
+
+<h2 class="text-2xl font-lilitaOne">Getting Started</h2>
+<p>
+  Now that you're signed up, it's time to start installing the necessary software. Head on over to the
+  <a href="https://github.com/CatboyEngineering/KinkShellClient/wiki" target="_blank" class="text-ksPinot underline hover:text-ksNavy">
+    installation guide
+  </a>
+  to get step-by-step instructions.
+</p>
+
+<div class="py-5"></div>
+
+<div class="p-3 rounded-md bg-ksPinot text-gray-100">
+  <h2 class="text-2xl font-lilitaOne text-center">Account Center</h2>
+  <app-name-change-form></app-name-change-form>
+  <app-change-password-form></app-change-password-form>
+
+  <div class="my-5 px-5 py-2 pb-5 bg-ksNavy text-gray-100 rounded-md">
+    <h2 class="text-xl font-lilitaOne">Delete Account</h2>
+    <p>
+      If you decide KinkShell isn't for you, you can delete your account using the button below. Please note that once your account is deleted,
+      <strong>it cannot be recovered</strong>
+      . All your account data, including KinkShells, will be permanently erased.
+    </p>
+
+    <div class="text-center mx-auto mt-3">
+      <button class="bg-red-900 text-white font-bold rounded-md px-3 py-2 mx-1 hover:bg-violet-900" (click)="deleteAccount()">
+        {{ isDeleting ? 'Confirm Delete?' : 'Delete Account' }}
+      </button>
+    </div>
+  </div>
 </div>
