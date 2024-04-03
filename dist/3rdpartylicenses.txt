@@ -278,6 +278,16 @@ https://github.com/cartant/rxjs-etc by Nicholas Jamieson, MIT licensed. See the
 file header for details.
 
 --------------------------------------------------------------------------------
+Package: ngx-window-token
+License: "MIT"
+
+
+--------------------------------------------------------------------------------
+Package: ngx-clipboard
+License: "MIT"
+
+
+--------------------------------------------------------------------------------
 Package: @ngrx/effects
 License: "MIT"
 

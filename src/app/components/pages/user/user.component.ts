@@ -5,11 +5,12 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { NameChangeFormComponent } from '../../forms/name-change-form/name-change-form.component';
 import { Router, RouterLink } from '@angular/router';
 import { ChangePasswordFormComponent } from '../../forms/change-password-form/change-password-form.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [AsyncPipe, NameChangeFormComponent, ChangePasswordFormComponent, RouterLink, CommonModule],
+  imports: [AsyncPipe, NameChangeFormComponent, ChangePasswordFormComponent, RouterLink, CommonModule, ClipboardModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -30,11 +31,5 @@ export class UserComponent {
     } else {
       this.authStateService.onDeleteAccountRequest();
     }
-  }
-
-  copy(text: string) {
-    try {
-      navigator.clipboard.writeText(text);
-    } catch {}
   }
 }

@@ -4,9 +4,10 @@
     <h2 class="text-xl font-lilitaOne">Your ID:</h2>
     <div *ngIf="userID$ | async as userID" class="py-1 px-3 my-1 rounded-md bg-ksCream dark:bg-ksPinot w-fit mx-auto text-sm">
       <pre class="inline-block">{{ userID }}</pre>
-      <i
-        class="hidden md:inline-block ml-2 fa-regular fa-copy text-gray-600 dark:text-ksCream hover:text-ksPinot dark:hover:text-ksNavy hover:cursor-pointer active:text-ksNavy"
-        (click)="copy(userID)"></i>
+      <button ngxClipboard [cbContent]="userID" class="hidden md:inline-block ml-2">
+        <i
+          class="fa-regular fa-copy text-gray-600 dark:text-ksCream hover:text-ksPinot dark:hover:text-ksNavy hover:cursor-pointer active:text-ksNavy"></i>
+      </button>
     </div>
     <p class="text-sm">Share this ID with other KinkShell users so they can add you to their shells.</p>
   </div>
