@@ -11,6 +11,7 @@ import { FormName } from '../../models/enum/form-name.enum';
 import { FormValidationError } from '../../models/form-validation-error.interface';
 import { AppDetailsStateActions } from '../app-details-state/app-details-state.actions';
 import { NameChangeResponse } from '../../models/API/response/name-change-response.interface';
+import { Account } from '../../models/account.interface';
 
 @Injectable()
 export class AuthStateEffects {
@@ -20,7 +21,7 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.registerAttempt),
       mergeMap(action =>
-        this.httpService.PUT<AccountAuthenticatedResponse>('account', action.request, "REGISTER_ACCOUNT").pipe(
+        this.httpService.PUT<AccountAuthenticatedResponse>('account', action.request, 'REGISTER_ACCOUNT').pipe(
           map(response => {
             return AuthStateActions.registerSuccess({ response: response.body! });
           }),
@@ -47,9 +48,9 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.loginAttempt),
       mergeMap(action =>
-        this.httpService.POST<AccountAuthenticatedResponse>('account', action.request, "LOG_IN").pipe(
+        this.httpService.POST<AccountAuthenticatedResponse>('account', action.request, 'LOG_IN').pipe(
           map(response => {
-              return AuthStateActions.loginSuccess({ response: response.body! });
+            return AuthStateActions.loginSuccess({ response: response.body! });
           }),
           catchError(error => {
             return of(AuthStateActions.authFailure({ form: FormName.LOG_IN, error: error }));
@@ -74,9 +75,9 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.nameChangeAttempt),
       mergeMap(action =>
-        this.httpService.PATCH<NameChangeResponse>('account', action.request, "CHANGE_NAME").pipe(
+        this.httpService.PATCH<NameChangeResponse>('account', action.request, 'CHANGE_NAME').pipe(
           map(response => {
-              return AuthStateActions.nameChangeSuccess({ response: response.body! });
+            return AuthStateActions.nameChangeSuccess({ response: response.body! });
           }),
           catchError(error => {
             return of(AuthStateActions.authFailure({ form: FormName.CHANGE_NAME, error: error }));
@@ -90,9 +91,9 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.changePasswordAttempt),
       mergeMap(action =>
-        this.httpService.PATCH<NameChangeResponse>('account-details', action.request, "CHANGE_PASSWORD").pipe(
+        this.httpService.PATCH<NameChangeResponse>('account-details', action.request, 'CHANGE_PASSWORD').pipe(
           map(() => {
-              return AuthStateActions.changePasswordSuccess();
+            return AuthStateActions.changePasswordSuccess();
           }),
           catchError(error => {
             return of(AuthStateActions.authFailure({ form: FormName.CHANGE_PASSWORD, error: error }));
@@ -117,9 +118,9 @@ export class AuthStateEffects {
     this.actions$.pipe(
       ofType(AuthStateActions.logOutAttempt),
       mergeMap(() =>
-        this.httpService.POST<any>('logout', {}, "LOG_OUT").pipe(
+        this.httpService.POST<any>('logout', {}, 'LOG_OUT').pipe(
           map(response => {
-              return AuthStateActions.logOutSuccess();
+            return AuthStateActions.logOutSuccess();
           }),
           catchError(error => {
             return of(AuthStateActions.logOutSuccess());
@@ -141,26 +142,26 @@ export class AuthStateEffects {
   );
 
   deleteAccountAttempt$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(AuthStateActions.deleteAttempt),
-    mergeMap(() =>
-      this.httpService.DELETE<any>('account', "DELETE_ACCOUNT").pipe(
-        map(response => {
+    this.actions$.pipe(
+      ofType(AuthStateActions.deleteAttempt),
+      mergeMap(() =>
+        this.httpService.DELETE<any>('account', 'DELETE_ACCOUNT').pipe(
+          map(response => {
             return AuthStateActions.deleteSuccess();
-        })
+          })
+        )
       )
     )
-  )
-);
+  );
 
-deleteAccountSuccess$ = createEffect(() =>
+  deleteAccountSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthStateActions.deleteSuccess),
       map(() => {
-        return AuthStateActions.logOutSuccess()
+        return AuthStateActions.logOutSuccess();
       })
     )
-);
+  );
 
   authExpired$ = createEffect(
     () =>
@@ -179,6 +180,21 @@ deleteAccountSuccess$ = createEffect(() =>
       map(payload => AppDetailsStateActions.formError({ error: this.mapAuthFailure(payload.form, payload.error) }))
     )
   );
+
+  getAccountListRequested$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.userListRequested),
+      mergeMap(() =>
+        this.httpService.GET<Account[]>('admin/users', 'GET_USER_LIST').pipe(
+          map(response => {
+            return AuthStateActions.userListReceived({ accounts: response.body! });
+          })
+        )
+      )
+    )
+  );
+
+  getAccountListSuccess$ = createEffect(() => this.actions$.pipe(ofType(AuthStateActions.userListReceived)), { dispatch: false });
 
   private mapAuthFailure(form: FormName, error: HttpErrorResponse): FormValidationError {
     switch (error.status) {

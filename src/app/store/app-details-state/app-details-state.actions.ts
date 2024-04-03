@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { FormValidationError } from '../../models/form-validation-error.interface';
+import { Account } from '../../models/account.interface';
 
 export abstract class AppDetailsStateActions {
   static readonly serverError = createAction('@kinkshell/action/error/server', props<{ error: any }>());

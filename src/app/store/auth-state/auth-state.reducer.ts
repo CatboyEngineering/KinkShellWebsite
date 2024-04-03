@@ -32,6 +32,13 @@ export const authStateReducer = createReducer(
       displayName: action.response.displayName
     })
   ),
+  on(
+    AuthStateActions.userListReceived,
+    (state, action): AuthState => ({
+      ...state,
+      accountList: action.accounts
+    })
+  ),
   on(AuthStateActions.logOutSuccess, (state, action): AuthState => authInitialState),
   on(AuthStateActions.authDataCleared, (state, action): AuthState => authInitialState)
 );

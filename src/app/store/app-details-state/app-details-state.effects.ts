@@ -7,10 +7,16 @@ import { catchError, map, mergeMap, of, tap, withLatestFrom } from 'rxjs';
 import { AppDetailsStateActions } from './app-details-state.actions';
 import { AuthStateActions } from '../auth-state/auth-state.actions';
 import { AppDetailsStateService } from './app-details-state.service';
+import { Account } from '../../models/account.interface';
 
 @Injectable()
 export class AppDetailsStateEffects {
-  constructor(private actions$: Actions, private appDetailsStateService: AppDetailsStateService, private router: Router) {}
+  constructor(
+    private actions$: Actions,
+    private appDetailsStateService: AppDetailsStateService,
+    private router: Router,
+    private httpService: HTTPService
+  ) {}
 
   serverErrorReceived$ = createEffect(
     () =>

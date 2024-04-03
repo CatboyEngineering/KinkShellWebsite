@@ -4,5 +4,6 @@ export const authInitialState: AuthState = {
   authToken: '',
   accountID: '',
   displayName: '',
-  isAdmin: false
+  isAdmin: false,
+  accountList: []
 };

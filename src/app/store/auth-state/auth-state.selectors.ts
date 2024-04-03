@@ -7,3 +7,4 @@ export const selectAuthToken = createSelector(selectAuthState, (state: AuthState
 export const selectUserID = createSelector(selectAuthState, (state: AuthState) => state.accountID);
 export const selectDisplayName = createSelector(selectAuthState, (state: AuthState) => state.displayName);
 export const selectIsAdmin = createSelector(selectAuthState, (state: AuthState) => state.isAdmin);
+export const selectAccounts = createSelector(selectAuthState, (state: AuthState) => state.accountList);
