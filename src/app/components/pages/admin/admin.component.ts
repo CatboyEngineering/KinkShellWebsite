@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Account } from '../../../models/account.interface';
 import { ClipboardModule } from 'ngx-clipboard';
+import { UpdateShellsFormComponent } from '../../forms/update-shells-form/update-shells-form.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, ClipboardModule],
+  imports: [CommonModule, ClipboardModule, UpdateShellsFormComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })

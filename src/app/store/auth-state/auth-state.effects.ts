@@ -214,6 +214,9 @@ export class AuthStateEffects {
       ofType(AuthStateActions.userChangeShellsReceived),
       map(() => {
         return AuthStateActions.userListRequested();
+      }),
+      catchError(error => {
+        return of(AuthStateActions.authFailure({ form: FormName.UPDATE_SHELLS, error: error }));
       })
     )
   );
