@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api_base: 'https://kinkshell.catboy.engineering/v1/'
+  api_base: 'https://api.catboy.engineering/kinkshell/v1/'
 };
