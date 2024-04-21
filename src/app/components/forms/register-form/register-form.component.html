@@ -62,17 +62,6 @@
         class="inline-block align-middle px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
     </div>
   </div>
-  <div class="my-4">
-    <ui-form-field-error [form]="form" [errorFor]="'betaPassword'" [errorType]="'required'">This field is required</ui-form-field-error>
-    <div>
-      <i class="inline-block mx-2 text-3xl align-middle fa-solid fa-flask w-8"></i>
-      <input
-        type="text"
-        placeholder="Beta Password"
-        formControlName="betaPassword"
-        class="inline-block align-middle px-3 py-1 rounded-md shadow-md dark:bg-gray-600" />
-    </div>
-  </div>
 
   <button
     [disabled]="isLoading$ | async"

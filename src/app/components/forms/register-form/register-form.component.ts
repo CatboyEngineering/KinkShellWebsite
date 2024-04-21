@@ -54,8 +54,7 @@ export class RegisterFormComponent {
           Validators.maxLength(32),
           Validators.pattern(/^[a-zA-Z0-9\s\-\'_]+$/)
         ])
-      }),
-      betaPassword: this.formBuilder.nonNullable.control('', { updateOn: 'submit', validators: Validators.required })
+      })
     });
   }
 
@@ -75,8 +74,7 @@ export class RegisterFormComponent {
       let request: AccountCreateRequest = {
         username: this.registerForm.controls.username.value.toLowerCase(),
         password: this.registerForm.controls.password.value,
-        displayName: this.registerForm.controls.displayName.value,
-        betaPassword: this.registerForm.controls.betaPassword.value
+        displayName: this.registerForm.controls.displayName.value
       };
 
       this.authStateService.onRegisterRequest(request);
