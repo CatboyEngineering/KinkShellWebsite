@@ -6,17 +6,20 @@ import { FormName } from '../../../models/enum/form-name.enum';
 import { AuthStateService } from '../../../store/auth-state/auth-state.service';
 import { NameChangeForm } from '../../../models/form/name-change-form.interface';
 import { NameChangeRequest } from '../../../models/API/request/name-change-request.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-name-change-form',
   standalone: true,
-  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent],
+  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent, CommonModule],
   templateUrl: './name-change-form.component.html',
   styleUrl: './name-change-form.component.css'
 })
 export class NameChangeFormComponent {
   nameChangeForm: FormGroup<NameChangeForm>;
   FormName = FormName;
+
+  changedSuccess = false;
 
   constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService) {
     this.nameChangeForm = this.formBuilder.group<NameChangeForm>({
@@ -39,6 +42,8 @@ export class NameChangeFormComponent {
       };
 
       this.authStateService.onNameChangeRequest(request);
+
+      this.changedSuccess = true;
 
       window.scrollTo(0, 0);
       window.focus();

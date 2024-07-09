@@ -7,17 +7,20 @@ import { ChangePasswordForm } from '../../../models/form/change-password-form.in
 import { UiFormFieldErrorComponent } from '../../ui/ui-form-field-error/ui-form-field-error.component';
 import { UiFormErrorComponent } from '../../ui/ui-form-error/ui-form-error.component';
 import { AppDetailsStateService } from '../../../store/app-details-state/app-details-state.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-change-password-form',
   standalone: true,
-  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent],
+  imports: [ReactiveFormsModule, UiFormFieldErrorComponent, UiFormErrorComponent, CommonModule],
   templateUrl: './change-password-form.component.html',
   styleUrl: './change-password-form.component.css'
 })
 export class ChangePasswordFormComponent {
   changePasswordForm: FormGroup<ChangePasswordForm>;
   FormName = FormName;
+
+  changedSuccess = false;
 
   constructor(private formBuilder: FormBuilder, private authStateService: AuthStateService, private appDetailsState: AppDetailsStateService) {
     this.changePasswordForm = this.formBuilder.group<ChangePasswordForm>({
@@ -46,6 +49,8 @@ export class ChangePasswordFormComponent {
       };
 
       this.authStateService.onChangePasswordRequest(request);
+
+      this.changedSuccess = true;
     }
   }
 }
