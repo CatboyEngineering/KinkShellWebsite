@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store/src/models';
-import { catchError, exhaustMap, map, mergeMap, of, tap } from 'rxjs';
+import { catchError, exhaustMap, filter, map, mergeMap, of, tap, withLatestFrom } from 'rxjs';
 import { AuthStateActions } from './auth-state.actions';
 import { HTTPService } from '../../services/http-service/http.service';
 import { AccountAuthenticatedResponse } from '../../models/API/response/account-authenticated-response.interface';
@@ -12,10 +12,11 @@ import { FormValidationError } from '../../models/form-validation-error.interfac
 import { AppDetailsStateActions } from '../app-details-state/app-details-state.actions';
 import { NameChangeResponse } from '../../models/API/response/name-change-response.interface';
 import { Account } from '../../models/account.interface';
+import { AuthStateService } from './auth-state.service';
 
 @Injectable()
 export class AuthStateEffects {
-  constructor(private actions$: Actions, private httpService: HTTPService, private router: Router) {}
+  constructor(private actions$: Actions, private httpService: HTTPService, private router: Router, private authStateService: AuthStateService) {}
 
   registerAttempt$ = createEffect(() =>
     this.actions$.pipe(
@@ -160,6 +161,24 @@ export class AuthStateEffects {
       map(() => {
         return AuthStateActions.logOutSuccess();
       })
+    )
+  );
+
+  heartbeatAttempt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthStateActions.authHeartbeat),
+      withLatestFrom(this.authStateService.authToken$),
+      filter(([_, token]) => !!token),
+      mergeMap(() =>
+        this.httpService.GET<any>('account').pipe(
+          map(() => {
+            return AuthStateActions.authHeartbeatSucceeded();
+          }),
+          catchError(() => {
+            return of(AuthStateActions.authExpired());
+          })
+        )
+      )
     )
   );
 

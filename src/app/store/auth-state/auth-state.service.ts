@@ -55,6 +55,10 @@ export class AuthStateService {
     this.store.dispatch(AuthStateActions.logOutAttempt());
   }
 
+  onHeartbeat(): void {
+    this.store.dispatch(AuthStateActions.authHeartbeat());
+  }
+
   onAuthDataCleared(): void {
     this.store.dispatch(AuthStateActions.authDataCleared());
   }

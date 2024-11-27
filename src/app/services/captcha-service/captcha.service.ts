@@ -9,8 +9,8 @@ import { environment } from '../../../environments/environment.dev';
 export class CaptchaService {
   constructor(private recaptchaV3Service: ReCaptchaV3Service) {}
 
-  createCaptchaToken$(action: string): Observable<string> {
-    if (environment.production) {
+  createCaptchaToken$(action?: string): Observable<string> {
+    if (!!action && environment.production) {
       return this.recaptchaV3Service.execute(action);
     } else {
       return of('token');

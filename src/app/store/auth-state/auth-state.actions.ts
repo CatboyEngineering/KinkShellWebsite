@@ -15,6 +15,8 @@ export abstract class AuthStateActions {
   static readonly loginAttempt = createAction('@kinkshell/action/login/attempt', props<{ request: AccountLoginRequest }>());
   static readonly loginSuccess = createAction('@kinkshell/action/login/success', props<{ response: AccountAuthenticatedResponse }>());
   static readonly authFailure = createAction('@kinkshell/action/authentication/failure', props<{ form: FormName; error: any }>());
+  static readonly authHeartbeat = createAction('@kinkshell/action/authentication/heartbeat');
+  static readonly authHeartbeatSucceeded = createAction('@kinkshell/action/authentication/heartbeat/success');
   static readonly authExpired = createAction('@kinkshell/action/authentication/expired');
   static readonly nameChangeAttempt = createAction('@kinkshell/action/namechange/attempt', props<{ request: NameChangeRequest }>());
   static readonly nameChangeSuccess = createAction('@kinkshell/action/namechange/success', props<{ response: NameChangeResponse }>());

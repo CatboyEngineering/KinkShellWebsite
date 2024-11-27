@@ -11,9 +11,14 @@ import { LoadingService } from '../loading-service/loading.service';
   providedIn: 'root'
 })
 export class HTTPService {
-  constructor(private http: HttpClient, private authStateService: AuthStateService, private captchaService: CaptchaService, private loadingService: LoadingService) {}
+  constructor(
+    private http: HttpClient,
+    private authStateService: AuthStateService,
+    private captchaService: CaptchaService,
+    private loadingService: LoadingService
+  ) {}
 
-  GET<T>(url: string, action: string): Observable<HttpResponse<T>> {
+  GET<T>(url: string, action?: string): Observable<HttpResponse<T>> {
     this.loadingService.beginLoad();
 
     return combineLatest([this.authStateService.authToken$, this.captchaService.createCaptchaToken$(action)]).pipe(
