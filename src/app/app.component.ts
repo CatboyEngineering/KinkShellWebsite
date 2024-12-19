@@ -6,21 +6,14 @@ import { RouterOutlet } from '@angular/router';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings, RecaptchaV3Module } from 'ng-recaptcha';
 import { RecaptchaCommonModule } from 'ng-recaptcha/lib/recaptcha-common.module';
 import { NavComponent } from './components/ui/nav/nav.component';
-import { AuthStateService } from './store/auth-state/auth-state.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RecaptchaV3Module, NavComponent],
+  imports: [RouterOutlet, NavComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'KinkShellWebsite';
-
-  constructor(private authStateService: AuthStateService) {}
-
-  ngOnInit(): void {
-    this.authStateService.onHeartbeat();
-  }
 }

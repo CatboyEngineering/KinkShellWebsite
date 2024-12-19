@@ -19,13 +19,6 @@
         <ul class="py-2 md:py-0">
           <a
             class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy"
-            href="https://github.com/CatboyEngineering/KinkShellClient/wiki"
-            target="_blank">
-            <i class="fa-solid fa-book mx-2"></i>
-            Guide
-          </a>
-          <a
-            class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy"
             href="https://github.com/CatboyEngineering/KinkShellClient"
             target="_blank">
             <i class="fa-solid fa-code-pull-request mx-2"></i>
@@ -43,43 +36,13 @@
       <div class="flex-auto"></div>
       <div class="basis-full md:basis-auto flex-initial self-center">
         <ul class="text-center md:text-inherit border-t md:border-none py-2 md:py-0">
-          <ng-container *ngIf="isLoggedIn$ | async; else guestUser">
-            <li
-              *ngIf="isAdmin$ | async"
-              class="inline-block mx-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy"
-              [routerLink]="['/admin']"
-              (click)="expanded = false">
-              <i class="fa-solid fa-toolbox mx-2"></i>
-              Admin
-            </li>
-            <li
-              class="inline-block mx-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy"
-              [routerLink]="['/user']"
-              (click)="expanded = false">
-              <i class="fa-solid fa-user mx-2"></i>
-              Account
-            </li>
-            <li class="inline-block mx-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy" (click)="logOut()" (click)="expanded = false">
-              <i class="fa-solid fa-arrow-right-from-bracket mx-2"></i>
-              Log Out
-            </li>
-          </ng-container>
-          <ng-template #guestUser>
-            <li
-              class="inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy"
-              [routerLink]="['/register']"
-              (click)="expanded = false">
-              <i class="fa-solid fa-plus mx-2"></i>
-              Register
-            </li>
-            <li
-              class="inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy"
-              [routerLink]="['/login']"
-              (click)="expanded = false">
-              <i class="fa-solid fa-arrow-right-to-bracket mx-2"></i>
-              Log In
-            </li>
-          </ng-template>
+          <a
+            class="md:inline-block mx-2 py-2 hover:text-ksSandy hover:cursor-pointer active:text-ksNavy"
+            href="https://github.com/CatboyEngineering/KinkShellClient/wiki/Getting-Started-(V2)"
+            target="_blank">
+            <i class="fa-solid fa-book mx-2"></i>
+            Get Started
+          </a>
         </ul>
       </div>
     </div>
